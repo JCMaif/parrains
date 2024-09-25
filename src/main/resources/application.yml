@@ -15,3 +15,7 @@ spring:
     init:
       data-locations: "classpath*:data.sql"
       mode: always
+  security:
+    jwt:
+      secret: "ALAFINDELAFOIREONCOMPTELESBOUSES"
+      expiration: 604800000  # 1 semaine en millisecondes
