@@ -13,3 +13,6 @@
 - Début de configuration Spring Security, écriture du cours (obsidian://open?vault=Pro&file=Procedures%2FSpring%20Security%203.3.1%20et%20React)
 - Ecriture des routes : [routes](../routes.md)
 - Envoi du CDC à shiipou pour voir si je ne suis pas hors sujet
+
+## Jeudi 26/09/24
+- Réécriture du cdc en .md
