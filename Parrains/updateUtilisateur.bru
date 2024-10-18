@@ -1,0 +1,36 @@
+meta {
+  name: updateUtilisateur
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{host}}/utilisateurs/{{id}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username":"Bilbon",
+    "firstname":"Frodon",
+    "lastname":"Sacquet",
+    "email":"bilbon@email.com",
+    "role":"PORTEUR",
+    "password":"precieux"
+  }
+}
+
+body:multipart-form {
+  username: Bilbon
+  firstname: Bilbon
+  lastname: Sacquet
+  company: La Communauté
+  password: precieux
+  email: bilbon@email.com
+  role: Porteur
+}
+
+vars:pre-request {
+  id: 2
+}

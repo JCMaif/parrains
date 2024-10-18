@@ -1,6 +1,4 @@
-﻿Application Trouve Ton Match
-
-Cahier des charges
+﻿# Application Trouve Ton Match -- Cahier des charges
 
 [Description des besoins	1](#_toc796073773)
 
@@ -124,75 +122,75 @@ Lorsque qu’un match est fait (Un Porteur a choisi un Parrain, ce même Parrain
 # <a name="_toc2081312639"></a>Parcours utilisateur
 1\. Parcours Administrateur
 
-Objectif : Gérer les utilisateurs (Porteurs et Parrains) et superviser les matchs.
+**Objectif** : Gérer les utilisateurs (Porteurs et Parrains) et superviser les matchs.
 
-Création de compte :
+**Création de compte** :
 L'administrateur crée le compte d'un utilisateur (Porteur ou Parrain) depuis un tableau de bord.
 Action déclenche : l'envoi d'un lien d'activation par mail à l'utilisateur.
 
-Gestion des comptes :
+**Gestion des comptes** :
 L'administrateur peut consulter, modifier ou désactiver les comptes utilisateurs via un dashboard.
 
-Suivi des matchs :
+**Suivi des matchs** :
 Lorsqu'un "match" est fait entre un porteur et un parrain, une alerte est envoyée à l'administrateur.
 L'administrateur peut valider, suivre, ou contacter les parties prenantes du match.
 
 2\. Parcours Porteur de Projet
 
-Objectif : Trouver un Parrain correspondant à son besoin.
+**Objectif** : Trouver un Parrain correspondant à son besoin.
 
-Activation de compte :
+**Activation de compte** :
 Le porteur reçoit un lien d'activation par mail pour compléter son profil.
 
-Compléter le profil :
+**Compléter le profil** :
 Une fois connecté, le porteur remplit des informations comme le nom, l'activité, les besoins d'accompagnement, la zone géographique, etc.
 
-Consultation des parrains :
+**Consultation des parrains** :
 Le porteur peut consulter une liste de parrains disponibles avec des filtres (zone géographique, domaine d'expertise, etc.).
 
-Sélection de parrain :
+**Sélection de parrain** :
 Après avoir consulté les profils, le porteur sélectionne un parrain qui correspond à ses besoins d'accompagnement.
 
 3\. Parcours Parrain (ou Marraine)
 
-Objectif : Trouver un projet à supporter.
+**Objectif** : Trouver un projet à supporter.
 
-Activation de compte :
+**Activation de compte** :
 Le parrain reçoit également un lien d'activation pour compléter son profil.
 
-Compléter le profil :
+**Compléter le profil** :
 Le parrain renseigne son nom, son parcours, son réseau professionnel, ses domaines d'expertise, et ses disponibilités.
 
-Consultation des projets :
+**Consultation des projets** :
 Le parrain a accès à la liste des projets des porteurs. Il peut filtrer les projets par besoin ou domaine d'activité.
 
-Sélection de projet :
+**Sélection de projet** :
 Après avoir examiné plusieurs projets, le parrain peut choisir un ou plusieurs projets qu'il souhaite accompagner.
 
 4\. Parcours de Match
 
-Objectif : Finaliser un partenariat entre un porteur et un parrain.
+**Objectif** : Finaliser un partenariat entre un porteur et un parrain.
 
-Condition de match :
+**Condition de match** :
 Un match se fait lorsque le porteur et le parrain se choisissent mutuellement.
 
-Notification et suivi :
+**Notification et suivi** :
 Une notification est envoyée à l'administrateur, et les coordonnées du porteur sont partagées au parrain.
 
-Icône Match :
+**Icône Match** :
 Un indicateur visuel (icône) s'affiche sur le projet concerné, indiquant qu'un match a été fait.
 
 5\. Évolutions Futures (Parcours en Messagerie)
 
-Objectif : Améliorer la communication entre les utilisateurs.
+**Objectif** : Améliorer la communication entre les utilisateurs.
 
-Messagerie interne :
+**Messagerie interne** :
 Après un match, le porteur et le parrain peuvent échanger via une messagerie intégrée à l'application.
 
-Espace “Mes Matchs” :
+**Espace “Mes Matchs”** :
 Un espace dédié permet à l'utilisateur (parrain ou porteur) de suivre ses projets/matchs en cours.
 
-Filtrage des utilisateurs :
+**Filtrage des utilisateurs** :
 L'implémentation de filtres supplémentaires (géographique, réseau, disponibilités) permettra une meilleure personnalisation de la recherche de parrains ou de projets.
 
 # <a name="_toc608720994"></a>User Stories
@@ -309,18 +307,18 @@ L'implémentation de filtres supplémentaires (géographique, réseau, disponibi
 
 # <a name="_toc1788108"></a>Charte graphique
 
-Couleurs principales :
+**Couleurs principales** :
 
 - Vert : #71c920
 - Rose : #e31766
 - Fond : #e7ffcc ou blanc au choix
 
-Polices :
+**Polices** :
 
 - Principale : Fira Sans
 - Secondaires (chat, ...) : au choix
 
-Site :
+**Site** :
 
 - Responsive :
   - Nav Bar étendue mode Desktop (tous liens visibles)
@@ -392,80 +390,84 @@ Le choix est fait de séparer les informations dans des tables dédiées pour fa
 ### <a name="_toc818390567"></a>Code Mermaid.js
 ```mermaid
 erDiagram
-    UTILISATEUR {
-        int id PK
-        string nom
-        string prenom
-        string email
-        string motDePasse
-        string type
-        boolean compteActive
+    %% Entites
+
+    Utilisateur {
+        Long id
+        String username
+        String email
+        String password
+        String role
     }
 
-    PORTEUR {
-        int id PK
-        string entreprise
-        date dateLancement
-        string domaineActivite
-        string description
-        string disponibilites
+    Adresse {
+        Long id
+        String rue
+        String ville
+        String codePostal
+        String pays
     }
 
-    PARRAIN {
-        int id PK
-        string entreprise
-        string parcours
-        string domaineExpertise
-        string disponibilites
+    Porteur {
+        Long id
+        String nom
+        String prenom
     }
 
-    PROJET {
-        int id PK
-        string titre
-        string description
-        date dateCreation
-        int besoinId FK
+    Parrain {
+        Long id
+        String nom
+        String prenom
     }
 
-    MATCH {
-        int id PK
-        date dateMatch
-        int administrateurId FK
+    Projet {
+        Long id
+        String name
+        String description
+        LocalDate startDate
+        LocalDate endDate
     }
 
-    ADRESSE {
-        int id PK
-        string rue
-        string ville
-        string codePostal
-        string pays
+    Besoin {
+        Long id
+        String description
+        
     }
 
-    PLATEFORME {
-        int id PK
-        string nom
+    Match {
+        Long id
+        LocalDate matchDate
+        String status
     }
 
-    RESEAU {
-        int id PK
-        string nom
+    Plateforme {
+        Long id
+        String nom
+        String type
     }
 
-    BESOIN {
-        int id PK
-        string nom
+    Reseau {
+        Long id
+        String nom
+        String description
     }
 
-    UTILISATEUR ||--o{ PORTEUR : "peut être"
-    UTILISATEUR ||--o{ PARRAIN : "peut être"
-    UTILISATEUR ||--o| ADRESSE : "a une"
-    UTILISATEUR ||--o| PLATEFORME : "appartient à"
-    PORTEUR ||--o{ PROJET : "possède"
-    PARRAIN ||--o{ RESEAU : "fait partie de"
-    PROJET ||--o{ MATCH : "participe à"
-    PARRAIN ||--o{ MATCH : "participe à"
-    PROJET ||--o| BESOIN : "a un"
-    MATCH ||--o| UTILISATEUR : "validé par"
+    %% Relations
+
+    Utilisateur ||--o{ Adresse : "a une"
+    Parrain ||--o{ Adresse : "a une"
+    Porteur ||--o{ Adresse : "a une"
+    Plateforme ||--o{ Adresse : "a une"
+
+    Projet ||--o{ Besoin : "a plusieurs"
+    
+    Parrain ||--o{ Match : "a plusieurs"
+    Projet ||--|{ Match : "a un"
+    
+    Parrain ||--o{ Reseau : "appartient a un"
+    Reseau ||--o{ Parrain : "a plusieurs"
+
+
 
 ```
 

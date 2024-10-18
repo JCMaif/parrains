@@ -16,3 +16,13 @@
 
 ## Jeudi 26/09/24
 - Réécriture du cdc en .md
+
+## Jeudi 17/10/24
+- Création des entities
+
+## Vendredi 18/10/24
+- Création des entities
+- Utilisateur en abstract, etendu par Porteur, Parrain et Plateforme
+- CRUD sur Utilisateur OK fonctionnel
+- Routes api/utilisateurs/... ok
+
