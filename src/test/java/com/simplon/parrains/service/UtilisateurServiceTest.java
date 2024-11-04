@@ -84,6 +84,8 @@ class UtilisateurServiceTest {
         // Assert
         assertThat(foundUser).isPresent();
         assertThat(foundUser.get()).usingRecursiveComparison().isEqualTo(porteur);
+
+        Mockito.verify(utilisateurRepository).findById(1L);
     }
         
 
