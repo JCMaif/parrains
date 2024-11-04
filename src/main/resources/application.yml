@@ -8,6 +8,7 @@ spring:
     password: postgres
   jpa:
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  # Ajout du dialecte
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
