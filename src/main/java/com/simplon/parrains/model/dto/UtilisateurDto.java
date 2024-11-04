@@ -1,6 +1,7 @@
 package com.simplon.parrains.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.simplon.parrains.model.Utilisateur;
 import com.simplon.parrains.model.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
