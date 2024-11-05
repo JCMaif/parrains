@@ -6,6 +6,7 @@ import com.simplon.parrains.service.UtilisateurService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 /*
  * Gestion des utilisateurs
+ * 
  */
 @RestController
 @Tag(name="Gestion des utilisateurs", description = "Opérations liées aux utilisateurs")
@@ -29,7 +31,7 @@ public class UtilisateurController {
     @PostMapping
     public ResponseEntity<UtilisateurDto> createUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
         UtilisateurDto createdUtilisateur = utilisateurService.createUtilisateur(utilisateurDto);
-        return ResponseEntity.ok(createdUtilisateur);
+       return ResponseEntity.status(HttpStatus.CREATED).body(createdUtilisateur);
     }
 
     @PutMapping("/{id}")
