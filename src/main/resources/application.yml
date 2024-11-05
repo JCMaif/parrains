@@ -20,3 +20,8 @@ spring:
     jwt:
       secret: "ALAFINDELAFOIREONCOMPTELESBOUSES"
       expiration: 604800000  # 1 semaine en millisecondes
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /docs

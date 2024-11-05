@@ -30,7 +30,7 @@ class UtilisateurServiceTest {
     private UtilisateurService utilisateurService;
 
     @Test
-    @DisplayName("Retourner tous les utilisateurs :")
+    @DisplayName("Retourner tous les utilisateurs")
     void shouldReturnAllUtilisateurs() {
       //Arrange
         Utilisateur porteur = new Porteur();
@@ -63,7 +63,7 @@ class UtilisateurServiceTest {
     }
 
     @Test
-    @DisplayName("Retourner un utilisateur par son id :")
+    @DisplayName("Retourner un utilisateur par son id")
     void shouldReturnUtilisateurById() {
         // Arrange
         Utilisateur porteur = new Porteur();
