@@ -21,7 +21,7 @@ public class ProjetService {
 
     public Projet getProjetById(Long id) {
         return projetRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException());
+            .orElseThrow(() -> new EntityNotFoundException("Projet non trouvé"));
     }
 
 }

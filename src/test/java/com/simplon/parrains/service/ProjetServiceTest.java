@@ -2,6 +2,7 @@ package com.simplon.parrains.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import jakarta.persistence.EntityNotFoundException;
 
 import com.simplon.parrains.model.Projet;
 import com.simplon.parrains.repository.ProjetRepository;
@@ -65,8 +67,6 @@ class ProjetServiceTest {
         projet1.setStartingDate(LocalDate.of(2024, 11, 05));
         projet1.setDescription("Super projet");
 
-        
-
         when(projetRepository.findById(1L)).thenReturn(Optional.of(projet1));
 
         //Act
@@ -75,6 +75,19 @@ class ProjetServiceTest {
         //Assert
         assertNotNull(result);
         assertEquals("Super projet",result.getDescription());
+    }
+
+    @Test
+    @DisplayName("Retourne une exception pour id introuvable")
+    void shouldReturnAnExceptionProjetById() {
+        
+        when(projetRepository.findById(2L)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+            projetService.getProjetById(2L);
+
+        });
+        assertEquals("Projet non trouvé", exception.getMessage());
     }
 
 }
