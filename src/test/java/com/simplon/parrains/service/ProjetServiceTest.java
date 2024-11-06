@@ -1,10 +1,12 @@
 package com.simplon.parrains.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -55,5 +57,24 @@ class ProjetServiceTest {
     }
 
 
+    @Test
+    @DisplayName("Retourne un projet par son id")
+    void shouldReturnAProjetById() {
+        //Arrange
+        Projet projet1 = new Projet();
+        projet1.setStartingDate(LocalDate.of(2024, 11, 05));
+        projet1.setDescription("Super projet");
+
+        
+
+        when(projetRepository.findById(1L)).thenReturn(Optional.of(projet1));
+
+        //Act
+        Projet result = projetService.getProjetById(1L);
+
+        //Assert
+        assertNotNull(result);
+        assertEquals("Super projet",result.getDescription());
+    }
 
 }
