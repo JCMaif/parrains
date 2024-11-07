@@ -17,30 +17,25 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         
-       return http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/signup/**", "/css/**", "/img/favicon.ico", "/img/**").permitAll()
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                )
-                .formLogin(login -> login
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        // .defaultSuccessUrl("/restaurants-list", true)
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                        .permitAll()
-                )
-                .build();
-    }
+    //    return http
+    //             .authorizeHttpRequests(auth -> auth
+    //                     .requestMatchers("/", "/login", "/signup/**", "/css/**", "/img/favicon.ico", "/img/**").permitAll()
+    //                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+    //                     .requestMatchers("/admin").hasRole("ADMIN")
+    //             )
+    //             .formLogin(login -> login
+    //                     .loginPage("/login")
+    //                     .loginProcessingUrl("/login")
+    //                     // .defaultSuccessUrl("/restaurants-list", true)
+    //                     .permitAll()
+    //             )
+    //             .logout(logout -> logout
+    //                     .logoutSuccessUrl("/")
+    //                     .permitAll()
+    //             )
+    //             .build();
+    // }
 }
