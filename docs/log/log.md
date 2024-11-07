@@ -26,3 +26,6 @@
 - CRUD sur Utilisateur OK fonctionnel
 - Routes api/utilisateurs/... ok
 
+## Mercredi 06/11/24
+- Branche TDD-gestion-des-projets : développer en TDD le projetService (exercice de cours)
+- Ok pour getAllProjets et getProjetById et exception si projet non trouvé
