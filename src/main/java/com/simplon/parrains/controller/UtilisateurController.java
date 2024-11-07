@@ -28,7 +28,7 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<UtilisateurDto> createUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
         UtilisateurDto createdUtilisateur = utilisateurService.createUtilisateur(utilisateurDto);
        return ResponseEntity.status(HttpStatus.CREATED).body(createdUtilisateur);
@@ -55,7 +55,7 @@ public class UtilisateurController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> deleteUtilisateur(@PathVariable Long id) {
         utilisateurService.deleteUtilisateur(id);
         return ResponseEntity.noContent().build();
