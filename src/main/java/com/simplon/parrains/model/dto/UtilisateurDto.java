@@ -22,8 +22,14 @@ public class UtilisateurDto {
     @Email(message = "Invalid email address")
     @NotNull(message = "Email is required")
     private String email;
+
+    @NotNull
     private Role role;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    private String disponibilite; // pour Porteur
+    private String expertise;     // pour Parrain
+    private String parcours;      // pour Parrain
 }

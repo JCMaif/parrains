@@ -1,5 +1,6 @@
 package com.simplon.parrains.service;
 
+import com.simplon.parrains.model.Admin;
 import com.simplon.parrains.model.Parrain;
 import com.simplon.parrains.model.Plateforme;
 import com.simplon.parrains.model.Porteur;
@@ -7,14 +8,20 @@ import com.simplon.parrains.model.Utilisateur;
 import com.simplon.parrains.model.dto.UtilisateurDto;
 import com.simplon.parrains.model.enums.Role;
 import com.simplon.parrains.repository.UtilisateurRepository;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Service
-public class UtilisateurService {
+public class UtilisateurService implements UserDetailsService {
 
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
@@ -28,17 +35,37 @@ public class UtilisateurService {
         return utilisateurRepository.findById(id).map(this::convertToDto);
     }
 
-    public UtilisateurDto createUtilisateur(UtilisateurDto utilisateurDto) {
-        Utilisateur utilisateur = createUtilisateurFromDto(utilisateurDto);
-        utilisateur.setPassword(passwordEncoder.encode(utilisateurDto.getPassword()));
-        return convertToDto(utilisateurRepository.save(utilisateur));
+    public Optional<UtilisateurDto> createUtilisateurWithActivationToken(UtilisateurDto utilisateurDto) {
+        try {
+            Utilisateur utilisateur = createUtilisateurFromDto(utilisateurDto);
+            utilisateur.setEnabled(false);
+            utilisateur.setActivationToken(generateActivationCode());
+            Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
+            return Optional.of(convertToDto(savedUtilisateur));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
-
+    
     public Optional<UtilisateurDto> updateUtilisateur(Long id, UtilisateurDto utilisateurDto) {
         return utilisateurRepository.findById(id).map(existingUtilisateur -> {
             updateUtilisateurFromDto(existingUtilisateur, utilisateurDto);
             return convertToDto(utilisateurRepository.save(existingUtilisateur));
         });
+    }
+
+    public Optional<UtilisateurDto> finalizeRegistration(String activationToken, String password) {
+        Optional<Utilisateur> optionalUtilisateur = utilisateurRepository.findByActivationToken(activationToken);
+
+        if (optionalUtilisateur.isPresent()) {
+            Utilisateur utilisateur = optionalUtilisateur.get();
+            utilisateur.setPassword(passwordEncoder.encode(password));
+            utilisateur.setEnabled(true);
+            utilisateur.setActivationToken(null);
+            Utilisateur updatedUtilisateur = utilisateurRepository.save(utilisateur);
+            return Optional.of(convertToDto(updatedUtilisateur));
+        }
+        return Optional.empty();
     }
 
     public void deleteUtilisateur(Long id) {
@@ -55,21 +82,24 @@ public class UtilisateurService {
         Utilisateur utilisateur;
 
         switch (utilisateurDto.getRole()) {
-            case PORTEUR:
-                utilisateur = new Porteur();
-                ((Porteur) utilisateur).setDisponibilite("Disponible le mercredi après-midi");
-                break;
-            case PARRAIN:
-                utilisateur = new Parrain();
-                ((Parrain) utilisateur).setExpertise("Je suis très bon pour trouver des subventions européennes");
-                ((Parrain) utilisateur).setParcours("Mon parcours est suffisant pour vous humilier dans tous les domaines");
-                break;
-            case PLATEFORME:
+            case PORTEUR -> {
+                Porteur porteur = new Porteur();
+                porteur.setDisponibilite(utilisateurDto.getDisponibilite());
+                utilisateur = porteur;
+            }
+            case PARRAIN -> {
+                Parrain parrain = new Parrain();
+                parrain.setExpertise(utilisateurDto.getExpertise());
+                parrain.setParcours(utilisateurDto.getParcours());
+                utilisateur = parrain;
+            }
+            case PLATEFORME -> {
                 utilisateur = new Plateforme();
-                ((Plateforme) utilisateur).setTelephone("0679875609");
-                break;
-            default:
-                throw new IllegalArgumentException("Rôle non reconnu: " + utilisateurDto.getRole());
+            }
+            case ADMIN -> {
+                utilisateur = new Admin();
+            }
+            default -> throw new IllegalArgumentException("Rôle non reconnu: " + utilisateurDto.getRole());
         }
 
         utilisateur.setRole(utilisateurDto.getRole());
@@ -94,13 +124,15 @@ public class UtilisateurService {
         }
 
         if (utilisateur instanceof Porteur && utilisateurDto.getRole() == Role.PORTEUR) {
-            ((Porteur) utilisateur).setDisponibilite("Disponible le mercredi après-midi");
+            ((Porteur) utilisateur).setDisponibilite(utilisateurDto.getDisponibilite());
         } else if (utilisateur instanceof Parrain && utilisateurDto.getRole() == Role.PARRAIN) {
-            ((Parrain) utilisateur).setExpertise("Je suis très bon pour trouver des subventions européennes");
-            ((Parrain) utilisateur).setParcours("Mon parcours est suffisant pour vous humilier dans tous les domaines");
-        } else if (utilisateur instanceof Plateforme && utilisateurDto.getRole() == Role.PLATEFORME) {
-            ((Plateforme) utilisateur).setTelephone("0679875609");
+            ((Parrain) utilisateur).setExpertise(utilisateurDto.getExpertise());
+            ((Parrain) utilisateur).setParcours(utilisateurDto.getParcours());
         }
+    }
+
+    private String generateActivationCode() {
+        return UUID.randomUUID().toString();
     }
 
     private UtilisateurDto convertToDto(Utilisateur utilisateur) {
@@ -112,5 +144,11 @@ public class UtilisateurService {
                 .role(utilisateur.getRole())
                 .company(utilisateur.getCompany())
                 .build();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return utilisateurRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur inconnu"));
     }
 }
