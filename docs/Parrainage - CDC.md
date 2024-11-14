@@ -357,7 +357,7 @@ Profil Parrain :
 - Lieux de déplacement possibles
 - Disponibilités
 
-Liste des réseaux :
+Liste des domaines d'activité :
 
 - Activités de services administratifs et de soutien 
 - Activités spécialisées, scientifiques et techniques 
@@ -437,19 +437,16 @@ erDiagram
     Match {
         Long id
         LocalDate matchDate
-        String status
     }
 
     Plateforme {
         Long id
         String nom
-        String type
     }
 
-    Reseau {
+    Domaine {
         Long id
         String nom
-        String description
     }
 
     %% Relations
@@ -460,12 +457,13 @@ erDiagram
     Plateforme ||--o{ Adresse : "a une"
 
     Projet ||--o{ Besoin : "a plusieurs"
+    Projet ||--o{ Domaine : "a un"
     
     Parrain ||--o{ Match : "a plusieurs"
     Projet ||--|{ Match : "a un"
     
-    Parrain ||--o{ Reseau : "appartient a un"
-    Reseau ||--o{ Parrain : "a plusieurs"
+    Parrain ||--o{ Domaine : "appartient a un"
+    Domaine ||--o{ Parrain : "a plusieurs"
 
 
 

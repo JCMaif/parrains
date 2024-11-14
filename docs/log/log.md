@@ -29,3 +29,6 @@
 ## Mercredi 06/11/24
 - Branche TDD-gestion-des-projets : développer en TDD le projetService (exercice de cours)
 - Ok pour getAllProjets et getProjetById et exception si projet non trouvé
+
+## Vendredi 08/11/24
+- Config Spring Security //TODO terminer jwtFilter et jwtService
