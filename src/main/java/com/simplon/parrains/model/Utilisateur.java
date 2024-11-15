@@ -50,10 +50,12 @@ public abstract class Utilisateur extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    private String activationToken;
+
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
-    private boolean enabled = false; //Creation par Admin, passera à true quand l'utilisateur renseignera son code d'accès ou son token
+    private boolean enabled = false; 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

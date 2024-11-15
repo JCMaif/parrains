@@ -73,7 +73,6 @@ public class UserInitializer {
                 plateforme.setEmail("accompagnement@initiativedeuxsevres.fr");
                 plateforme.setRole(Role.PLATEFORME);
                 plateforme.setEnabled(true);
-                plateforme.setTelephone("0679875609");
                 utilisateurRepository.save(plateforme);
             }
         };

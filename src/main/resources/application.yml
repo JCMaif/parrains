@@ -18,10 +18,15 @@ spring:
       mode: always
   security:
     jwt:
-      secret: "ALAFINDELAFOIREONCOMPTELESBOUSES"
+      secret: "@LAFIN2LAFOIREONCOMPTELESBOUSES"
       expiration: 604800000  # 1 semaine en millisecondes
+
+server:
+  servlet:
+    context-path: /api  # Définit le préfixe /api pour toutes les routes
+
 springdoc:
   api-docs:
-    path: /api-docs
+    path: /public/documentation
   swagger-ui:
-    path: /docs
+    path: /public/documentation
