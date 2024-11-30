@@ -123,7 +123,7 @@ public class UtilisateurService implements UserDetailsService {
             utilisateur.setPassword(passwordEncoder.encode(utilisateurDto.getPassword()));
         }
 
-        if (utilisateur instanceof Porteur && utilisateurDto.getRole() == Role.PORTEUR) {
+        if ((utilisateur instanceof Porteur) && (utilisateurDto.getRole() == Role.PORTEUR)) {
             ((Porteur) utilisateur).setDisponibilite(utilisateurDto.getDisponibilite());
         } else if (utilisateur instanceof Parrain && utilisateurDto.getRole() == Role.PARRAIN) {
             ((Parrain) utilisateur).setExpertise(utilisateurDto.getExpertise());

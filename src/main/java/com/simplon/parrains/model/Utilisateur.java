@@ -45,9 +45,8 @@ public abstract class Utilisateur extends BaseEntity implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "adresse_id", referencedColumnName = "id")
     private Adresse adresse;
-
+    
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role;
 
     private String activationToken;
@@ -55,7 +54,7 @@ public abstract class Utilisateur extends BaseEntity implements UserDetails {
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
-    private boolean enabled = false; 
+    private boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
